@@ -5,7 +5,7 @@ from .models import TodoList
 from .serializers import TodoListSerializer
 
 def alltodos(request):
-    todolist = TodoList.objects.all()
+    todolist = TodoList.objects.order_by('pk')
 
     todos = TodoListSerializer(todolist, many=True)
     
