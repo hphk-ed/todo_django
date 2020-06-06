@@ -22,7 +22,6 @@ def read(request):
 
 @api_view(['PUT', 'POST', 'DELETE'])
 def cud(request, todo_pk):
-    todo = get_object_or_404(TodoList, pk=todo_pk)
     post_data = json.loads(request.body.decode('utf-8'))
 
     if request.method == "POST":
@@ -32,12 +31,14 @@ def cud(request, todo_pk):
             serializer.save()
 
     elif request.method == "PUT":
+        todo = get_object_or_404(TodoList, pk=todo_pk)  
         serializer = TodoListSerializer(data=post_data, instance=todo)
         
         if serializer.is_valid(raise_exception=True):
             serializer.save()
 
     elif request.method == "DELETE":
+        todo = get_object_or_404(TodoList, pk=todo_pk)  
         todo.delete()
         
     todolist = TodoList.objects.order_by('pk')
