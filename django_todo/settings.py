@@ -132,10 +132,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
 
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:8080',
-    'http://192.168.55.215:8080',
-]
+# CORS_ORIGIN_WHITELIST = [
+#     'http://localhost:8080',
+#     'http://192.168.55.215:8080',
+# ]
 
 # Heroku: Update database configuration from $DATABASE_URL.
 import dj_database_url
@@ -146,3 +146,6 @@ DATABASES['default'].update(db_from_env)
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+CORS_ORIGIN_ALLOW_ALL = True
