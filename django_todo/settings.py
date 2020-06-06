@@ -27,7 +27,7 @@ SECRET_KEY = config('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DJANGO_DEBUG', cast=bool)
 
-ALLOWED_HOSTS = ['hphk-ed-django-todo.herokuapp.com',]
+ALLOWED_HOSTS = ['hphk-ed-django-todo.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'corsheaders',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
@@ -149,3 +150,18 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'basic': {
+            'type': 'basic'
+        }
+    },
+    'SUPPORTED_SUBMIT_METHODS': ['get',]
+}
+
+REDOC_SETTINGS = {
+    'LAZY_RENDERING': False,
+}
+
+
