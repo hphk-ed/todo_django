@@ -19,26 +19,34 @@ def read(request):
     }
     return Response(context)
 
+@api_view(['POST'])
+def create(request):
+    post_data = json.loads(request.body.decode('utf-8'))
+    serializer = TodoListSerializer(data=post_data)
 
-@api_view(['PUT', 'POST', 'DELETE'])
-def cud(request, todo_pk):
+    if serializer.is_valid(raise_exception=True):
+        serializer.save()
+
+    todolist = TodoList.objects.order_by('pk')
+    todos = TodoListSerializer(todolist, many=True)
+    context = {
+        'todos': todos.data
+    }
+    return Response(context)
+
+
+@api_view(['PUT', 'DELETE'])
+def updatedelete(request, todo_pk):
+    todo = get_object_or_404(TodoList, pk=todo_pk)  
     post_data = json.loads(request.body.decode('utf-8'))
 
-    if request.method == "POST":
-        serializer = TodoListSerializer(data=post_data)
-
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-
-    elif request.method == "PUT":
-        todo = get_object_or_404(TodoList, pk=todo_pk)  
+    if request.method == "PUT":
         serializer = TodoListSerializer(data=post_data, instance=todo)
         
         if serializer.is_valid(raise_exception=True):
             serializer.save()
 
     elif request.method == "DELETE":
-        todo = get_object_or_404(TodoList, pk=todo_pk)  
         todo.delete()
         
     todolist = TodoList.objects.order_by('pk')

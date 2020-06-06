@@ -5,6 +5,7 @@ from . import views
 app_name = 'todolists'
 
 urlpatterns = [
-    path('', views.read, name="read"),
-    path('<todo_pk>/', views.cud, name="cud"),
+    path('', views.read, name="r"),
+    path('todo/', views.create, name='c'),
+    path('todo/<todo_pk>/', views.updatedelete, name="ud"),
 ]
